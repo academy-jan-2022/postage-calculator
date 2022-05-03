@@ -20,6 +20,6 @@ public class PostageCalculator {
     }
 
     private boolean isTierTwoPrice(int weight, int height, int width) {
-        return weight > 60 || (height < 324 && height > 229) || (width > 162 && width < 229);
+        return weight > 60 || (!(height > 324) && height > 229) || (width > 162 && width < 229);
     }
 }
