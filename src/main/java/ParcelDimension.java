@@ -1,48 +1,58 @@
 import java.util.stream.Stream;
 
-record ParcelDimension(int weight, int height, int width, int depth) {
+abstract class Measurement {
+    private final int value;
+    private final int limitOne;
+    private final int limitTwo;
+
+    Measurement(int value, int limitOne, int limitTwo){
+        this.value = value;
+        this.limitOne = limitOne;
+        this.limitTwo = limitTwo;
+    }
+    protected Tier getTier(){
+        if(value > limitTwo ){
+            return Tier.THREE;
+        }
+
+        if(value > limitOne){
+            return Tier.TWO;
+        }
+
+        return Tier.ONE;
+    }
+
+    protected int getValue(){
+        return value;
+    }
+}
+
+class Weight extends Measurement {
+    Weight(int value) {
+        super(value, 60, 500);
+    }
+}
+
+class Height extends Measurement {
+    Height(int value) {
+        super(value, 229, 324);
+    }
+}
+
+record ParcelDimension(Measurement weight, Measurement height, Width width, int depth) {
 
     public Tier getTier() {
-        return Stream.of(getWidthTier(), getDepthTier(), getWeightTier(), getHeightTier())
+        return Stream.of(getWidthTier(), getDepthTier(), weight.getTier(), height.getTier())
                 .reduce(Tier.ONE, Tier::comparePriority);
 
     }
 
-    private Tier getWeightTier() {
-        if(weight > 500){
-            return Tier.THREE;
-        }
-
-        if(this.weight > 60){
-            return Tier.TWO;
-        }
-
-        return Tier.ONE;
+    public int getWeight(){
+        return weight.getValue();
     }
-
-    private Tier getHeightTier() {
-        if(height > 324){
-            return Tier.THREE;
-        }
-
-        if(height > 229){
-            return Tier.TWO;
-        }
-
-        return Tier.ONE;
-    }
-
 
     private Tier getWidthTier() {
-        if(width > 229){
-            return Tier.THREE;
-        }
-
-        if(width > 162){
-            return Tier.TWO;
-        }
-
-        return Tier.ONE;
+       return width.getTier();
     }
 
 
