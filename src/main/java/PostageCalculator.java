@@ -7,7 +7,7 @@ public class PostageCalculator {
     public static final int TIER_ONE_PRICE = 120;
 
     public Money calculate(int weight, int height, int width, int depth, Currency currency) {
-        ParcelDimension parcelDimension = new ParcelDimension(new Weight(weight), new Height(height), new Width(width), depth);
+        ParcelDimension parcelDimension = new ParcelDimension(new Weight(weight), new Height(height), new Width(width), new Depth(depth));
         Tier tier = parcelDimension.getTier();
         BigDecimal amount = getAmountBy(tier, parcelDimension);
 
