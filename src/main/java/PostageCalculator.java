@@ -7,7 +7,7 @@ public class PostageCalculator {
     public Money calculate(int weight, int height, int width, int depth, Currency currency) {
         BigDecimal amount;
 
-        if (weight > 60) {
+        if (weight > 60 || height < 324 && height > 229 ) {
             amount = BigDecimal.valueOf(weight).multiply(TIMES_4);
         } else {
             amount = BigDecimal.valueOf(120);
