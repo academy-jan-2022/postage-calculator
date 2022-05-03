@@ -6,26 +6,26 @@ public class PostageCalculator {
     public static final int TIER_ONE_PRICE = 120;
 
     public Money calculate(int weight, int height, int width, int depth, Currency currency) {
-        Dimension dimension = new Dimension(weight, height, width, depth);
-        BigDecimal amount = getAmountByTier(dimension);
+        ParcelDimension parcelDimension = new ParcelDimension(weight, height, width, depth);
+        BigDecimal amount = getAmountByTier(parcelDimension);
 
         return new Money(amount, Currency.GBP);
     }
 
-    private BigDecimal getAmountByTier(Dimension dimension) {
-        if (isTierTwoPrice(dimension)) {
-            return BigDecimal.valueOf(dimension.weight).multiply(TIMES_4);
+    private BigDecimal getAmountByTier(ParcelDimension parcelDimension) {
+        if (isTierTwoPrice(parcelDimension)) {
+            return BigDecimal.valueOf(parcelDimension.weight).multiply(TIMES_4);
         }
 
         return BigDecimal.valueOf(TIER_ONE_PRICE);
     }
 
-    private boolean isTierTwoPrice(Dimension dimension) {
-        return dimension.weight > 60 || (!(dimension.height > 324) && dimension.height > 229) || (dimension.width > 162 && dimension.width <= 229) || dimension.depth > 50;
+    private boolean isTierTwoPrice(ParcelDimension parcelDimension) {
+        return parcelDimension.weight > 60 || (!(parcelDimension.height > 324) && parcelDimension.height > 229) || (parcelDimension.width > 162 && parcelDimension.width <= 229) || parcelDimension.depth > 50;
     }
 
 
-    private record Dimension(int weight, int height, int width, int depth) {
+    private record ParcelDimension(int weight, int height, int width, int depth) {
     }
 }
 
