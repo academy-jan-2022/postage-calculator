@@ -3,6 +3,7 @@ import java.math.BigDecimal;
 public class PostageCalculator {
 
     public static final BigDecimal TIMES_4 = BigDecimal.valueOf(4);
+    public static final int TIER_ONE_PRICE = 120;
 
     public Money calculate(int weight, int height, int width, int depth, Currency currency) {
         BigDecimal amount;
@@ -10,7 +11,7 @@ public class PostageCalculator {
         if (isTierTwoPrice(weight, height)) {
             amount = BigDecimal.valueOf(weight).multiply(TIMES_4);
         } else {
-            amount = BigDecimal.valueOf(120);
+            amount = BigDecimal.valueOf(TIER_ONE_PRICE);
         }
 
         return new Money(amount, Currency.GBP);
