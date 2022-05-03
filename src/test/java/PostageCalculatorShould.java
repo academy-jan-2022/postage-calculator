@@ -22,13 +22,17 @@ class PostageCalculatorShould {
         Assertions.assertEquals(Currency.GBP, actualAmount.currency());
     }
 
-    @Test
-    void calculate_variable_cost_dependant_on_weight() {
+    @ParameterizedTest
+    @CsvSource({
+            "250, 220, 150, 10, 1000",
+            "150, 180, 125, 22, 600",
+    })
+    void calculate_variable_cost_dependant_on_weight(int weight, int height, int width, int depth, int expected) {
         PostageCalculator postageCalculator = new PostageCalculator();
 
-        Money actualAmount = postageCalculator.calculate(250, 220, 150, 10, Currency.GBP);
+        Money actualAmount = postageCalculator.calculate(weight, height, width, depth, Currency.GBP);
 
-        Assertions.assertEquals(BigDecimal.valueOf(1000), actualAmount.amount());
+        Assertions.assertEquals(BigDecimal.valueOf(expected), actualAmount.amount());
         Assertions.assertEquals(Currency.GBP, actualAmount.currency());
     }
 }
