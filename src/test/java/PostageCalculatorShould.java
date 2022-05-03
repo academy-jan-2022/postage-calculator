@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -9,8 +8,8 @@ class PostageCalculatorShould {
 
     @ParameterizedTest
     @CsvSource({
-        "50, 220, 150, 10, 120",
-        "60, 180, 125, 22, 120",
+            "50, 220, 150, 10, 120",
+            "60, 180, 125, 22, 120",
     })
     void calculate_for_a_fixed_cost_of_120(int weight, int height, int width, int depth, int expected) {
 
