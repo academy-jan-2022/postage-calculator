@@ -6,20 +6,26 @@ public class PostageCalculator {
     public static final int TIER_ONE_PRICE = 120;
 
     public Money calculate(int weight, int height, int width, int depth, Currency currency) {
-        BigDecimal amount = getAmountByTier(weight, height, width, depth);
+        Dimension dimension = new Dimension(weight, height, width, depth);
+        BigDecimal amount = getAmountByTier(dimension);
 
         return new Money(amount, Currency.GBP);
     }
 
-    private BigDecimal getAmountByTier(int weight, int height, int width, int depth) {
-        if (isTierTwoPrice(weight, height, width, depth)) {
-            return BigDecimal.valueOf(weight).multiply(TIMES_4);
+    private BigDecimal getAmountByTier(Dimension dimension) {
+        if (isTierTwoPrice(dimension)) {
+            return BigDecimal.valueOf(dimension.weight).multiply(TIMES_4);
         }
 
         return BigDecimal.valueOf(TIER_ONE_PRICE);
     }
 
-    private boolean isTierTwoPrice(int weight, int height, int width, int depth) {
-        return weight > 60 || (!(height > 324) && height > 229) || (width > 162 && width <= 229) || depth > 50;
+    private boolean isTierTwoPrice(Dimension dimension) {
+        return dimension.weight > 60 || (!(dimension.height > 324) && dimension.height > 229) || (dimension.width > 162 && dimension.width <= 229) || dimension.depth > 50;
+    }
+
+
+    private record Dimension(int weight, int height, int width, int depth) {
     }
 }
+
