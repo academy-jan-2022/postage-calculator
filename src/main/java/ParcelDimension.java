@@ -34,7 +34,15 @@ record ParcelDimension(int weight, int height, int width, int depth) {
 
 
     private Tier getWidthTier() {
-        return (this.width > 162 && this.width <= 229) ? Tier.TWO : Tier.ONE;
+        if(width > 229){
+            return Tier.THREE;
+        }
+
+        if(width > 162){
+            return Tier.TWO;
+        }
+
+        return Tier.ONE;
     }
 
 
