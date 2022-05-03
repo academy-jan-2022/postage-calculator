@@ -6,15 +6,17 @@ public class PostageCalculator {
     public static final int TIER_ONE_PRICE = 120;
 
     public Money calculate(int weight, int height, int width, int depth, Currency currency) {
-        BigDecimal amount;
-
-        if (isTierTwoPrice(weight, height)) {
-            amount = BigDecimal.valueOf(weight).multiply(TIMES_4);
-        } else {
-            amount = BigDecimal.valueOf(TIER_ONE_PRICE);
-        }
+        BigDecimal amount = getAmountByTier(weight, height);
 
         return new Money(amount, Currency.GBP);
+    }
+
+    private BigDecimal getAmountByTier(int weight, int height) {
+        if (isTierTwoPrice(weight, height)) {
+            return BigDecimal.valueOf(weight).multiply(TIMES_4);
+        }
+
+        return BigDecimal.valueOf(TIER_ONE_PRICE);
     }
 
     private boolean isTierTwoPrice(int weight, int height) {
