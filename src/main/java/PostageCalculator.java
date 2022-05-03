@@ -13,7 +13,7 @@ public class PostageCalculator {
         return new Money(amount, Currency.GBP);
     }
 
-    private BigDecimal getAmountBy(Tier tier,ParcelDimension parcelDimension) {
+    private BigDecimal getAmountBy(Tier tier, ParcelDimension parcelDimension) {
         if (Tier.TWO == tier) {
             return BigDecimal.valueOf(parcelDimension.weight()).multiply(TIMES_4);
         }

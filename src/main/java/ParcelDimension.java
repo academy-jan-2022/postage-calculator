@@ -1,33 +1,28 @@
+import java.util.stream.Stream;
+
 record ParcelDimension(int weight, int height, int width, int depth) {
 
     public Tier getTier() {
-        if (isTierTwo())
-            return Tier.TWO;
-
-        return Tier.ONE;
+        return Stream.of(getWidthTier(), getDepthTier(), getWeightTier(), getHeightTier())
+                .reduce(Tier.ONE, Tier::comparePriority);
 
     }
 
-    private boolean isTierTwo() {
-        return isTierTwoPriceBasedOnWeight() ||
-                isTierTwoPriceBasedOnHeight() ||
-                isTierTwoPriceBasedOnWidth() ||
-                isTierTwoPriceBasedOnDepth();
+    private Tier getWeightTier() {
+        return this.weight > 60 ? Tier.TWO : Tier.ONE;
     }
 
-    private boolean isTierTwoPriceBasedOnDepth() {
-        return this.depth > 50;
+    private Tier getHeightTier() {
+        return (!(this.height > 324) && this.height > 229) ? Tier.TWO : Tier.ONE;
     }
 
-    private boolean isTierTwoPriceBasedOnWidth() {
-        return this.width > 162 && this.width <= 229;
+
+    private Tier getWidthTier() {
+        return (this.width > 162 && this.width <= 229) ? Tier.TWO : Tier.ONE;
     }
 
-    private boolean isTierTwoPriceBasedOnHeight() {
-        return !(this.height > 324) && this.height > 229;
-    }
 
-    private boolean isTierTwoPriceBasedOnWeight() {
-        return this.weight > 60;
+    private Tier getDepthTier() {
+        return (this.depth > 50) ? Tier.TWO : Tier.ONE;
     }
 }
