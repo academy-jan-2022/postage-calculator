@@ -44,7 +44,8 @@ class PostageCalculatorShould {
 
     @ParameterizedTest
     @CsvSource({
-            "600,0,0,0,3600"
+            "600,0,0,0,3600",
+            "400,325,0,0,2400"
     })
     void calculate_tier_three_price_dependant_on(int weight, int height, int width, int depth, int expected) {
         PostageCalculator postageCalculator = new PostageCalculator();
