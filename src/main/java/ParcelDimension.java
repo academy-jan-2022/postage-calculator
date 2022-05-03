@@ -4,7 +4,7 @@ record ParcelDimension(int weight, int height, int width, int depth) {
 
     public Tier getTier() {
         return Stream.of(getWidthTier(), getDepthTier(), getWeightTier(), getHeightTier())
-                .reduce(Tier.ONE, Tier::comparePriority);
+                .reduce(Tier.ONE, Tier::getHigherPriority);
 
     }
 

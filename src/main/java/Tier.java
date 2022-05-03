@@ -9,7 +9,7 @@ public enum Tier {
         this.priority = priority;
     }
 
-    public Tier comparePriority(Tier otherTier) {
+    public Tier getHigherPriority(Tier otherTier) {
         if (this.priority > otherTier.priority) {
             return this;
         }
