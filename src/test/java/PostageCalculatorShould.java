@@ -11,7 +11,7 @@ class PostageCalculatorShould {
             "50, 220, 150, 10, 120",
             "60, 180, 125, 22, 120",
     })
-    void calculate_for_a_fixed_cost_of_120(int weight, int height, int width, int depth, int expected) {
+    void calculate_tier_one_price_dependant_on(int weight, int height, int width, int depth, int expected) {
 
         PostageCalculator postageCalculator = new PostageCalculator();
 
@@ -32,7 +32,7 @@ class PostageCalculatorShould {
             "50, 0, 229 ,0, 200",
             "20, 0, 0 ,80, 80",
     })
-    void calculate_variable_cost_dependant_on_weight(int weight, int height, int width, int depth, int expected) {
+    void calculate_tier_two_price_dependant_on(int weight, int height, int width, int depth, int expected) {
         PostageCalculator postageCalculator = new PostageCalculator();
 
         Money actualAmount = postageCalculator.calculate(weight, height, width, depth, Currency.GBP);
