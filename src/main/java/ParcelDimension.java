@@ -47,6 +47,14 @@ record ParcelDimension(int weight, int height, int width, int depth) {
 
 
     private Tier getDepthTier() {
-        return (this.depth > 50) ? Tier.TWO : Tier.ONE;
+        if(depth > 100){
+            return Tier.THREE;
+        }
+
+        if(depth > 25){
+            return Tier.TWO;
+        }
+
+        return Tier.ONE;
     }
 }
