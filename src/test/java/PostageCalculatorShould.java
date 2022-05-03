@@ -24,6 +24,5 @@ class PostageCalculatorShould {
 
         Assertions.assertEquals(BigDecimal.valueOf(1000), actualAmount.amount());
         Assertions.assertEquals(Currency.GBP, actualAmount.currency());
-
     }
 }
