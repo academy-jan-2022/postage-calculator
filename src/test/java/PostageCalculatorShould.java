@@ -25,9 +25,12 @@ class PostageCalculatorShould {
     @CsvSource({
             "250, 220, 150, 10, 1000",
             "150, 180, 125, 22, 600",
-            "40,300, 100,50, 160",
-            "40, 200, 170 ,50, 160",
-            "40, 10, 229 ,50, 160",
+            "40,300, 0, 0, 160",
+            "40,324, 0, 0, 160",
+            "40, 0, 170 ,0, 160",
+            "50, 0, 229 ,0, 200",
+            "50, 0, 229 ,0, 200",
+            "60, 0, 0 ,80, 200",
     })
     void calculate_variable_cost_dependant_on_weight(int weight, int height, int width, int depth, int expected) {
         PostageCalculator postageCalculator = new PostageCalculator();
