@@ -13,7 +13,7 @@ record ParcelDimension(int weight, int height, int width, int depth) {
     }
 
     private Tier getHeightTier() {
-        return (!(this.height > 324) && this.height > 229) ? Tier.TWO : Tier.ONE;
+        return (this.height <= 324 && this.height > 229) ? Tier.TWO : Tier.ONE;
     }
 
 

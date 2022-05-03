@@ -31,8 +31,22 @@ class PostageCalculatorShould {
             "50, 0, 229 ,0, 200",
             "50, 0, 229 ,0, 200",
             "20, 0, 0 ,80, 80",
+            "20, 0, 0 ,100, 80",
     })
     void calculate_tier_two_price_dependant_on(int weight, int height, int width, int depth, int expected) {
+        PostageCalculator postageCalculator = new PostageCalculator();
+
+        Money actualAmount = postageCalculator.calculate(weight, height, width, depth, Currency.GBP);
+
+        Assertions.assertEquals(BigDecimal.valueOf(expected), actualAmount.amount());
+        Assertions.assertEquals(Currency.GBP, actualAmount.currency());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "600,0,0,0,3600"
+    })
+    void calculate_tier_three_price_dependant_on(int weight, int height, int width, int depth, int expected) {
         PostageCalculator postageCalculator = new PostageCalculator();
 
         Money actualAmount = postageCalculator.calculate(weight, height, width, depth, Currency.GBP);
