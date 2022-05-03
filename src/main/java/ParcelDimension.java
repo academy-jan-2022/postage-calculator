@@ -9,11 +9,11 @@ record ParcelDimension(int weight, int height, int width, int depth) {
     }
 
     private Tier getWeightTier() {
-        if(weight > 500){
+        if (weight > 500) {
             return Tier.THREE;
         }
 
-        if(this.weight > 60){
+        if (this.weight > 60) {
             return Tier.TWO;
         }
 
@@ -21,11 +21,11 @@ record ParcelDimension(int weight, int height, int width, int depth) {
     }
 
     private Tier getHeightTier() {
-        if(height > 324){
+        if (height > 324) {
             return Tier.THREE;
         }
 
-        if(height > 229){
+        if (height > 229) {
             return Tier.TWO;
         }
 
@@ -34,7 +34,10 @@ record ParcelDimension(int weight, int height, int width, int depth) {
 
 
     private Tier getWidthTier() {
-        return (this.width > 162 && this.width <= 229) ? Tier.TWO : Tier.ONE;
+        if (width > 229) return Tier.THREE;
+        if (width > 162) return Tier.TWO;
+        return Tier.ONE;
+
     }
 
 
