@@ -1,4 +1,6 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -6,15 +8,19 @@ import java.math.BigDecimal;
 
 class PostageCalculatorShould {
 
+    private PostageCalculator postageCalculator;
+
+    @BeforeEach
+    void setUp() {
+        postageCalculator = new PostageCalculator();
+    }
+
     @ParameterizedTest
     @CsvSource({
             "50, 220, 150, 10, 120",
             "60, 180, 125, 22, 120",
     })
     void calculate_tier_one_price_dependant_on(int weight, int height, int width, int depth, int expected) {
-
-        PostageCalculator postageCalculator = new PostageCalculator();
-
         Money actualAmount = postageCalculator.calculate(weight, height, width, depth, Currency.GBP);
 
         Assertions.assertEquals(BigDecimal.valueOf(expected), actualAmount.amount());
@@ -34,8 +40,6 @@ class PostageCalculatorShould {
             "20, 0, 0 ,100, 80",
     })
     void calculate_tier_two_price_dependant_on(int weight, int height, int width, int depth, int expected) {
-        PostageCalculator postageCalculator = new PostageCalculator();
-
         Money actualAmount = postageCalculator.calculate(weight, height, width, depth, Currency.GBP);
 
         Assertions.assertEquals(BigDecimal.valueOf(expected), actualAmount.amount());
@@ -50,11 +54,19 @@ class PostageCalculatorShould {
             "200,0,0,101,1200",
     })
     void calculate_tier_three_price_dependant_on(int weight, int height, int width, int depth, int expected) {
-        PostageCalculator postageCalculator = new PostageCalculator();
-
         Money actualAmount = postageCalculator.calculate(weight, height, width, depth, Currency.GBP);
 
         Assertions.assertEquals(BigDecimal.valueOf(expected), actualAmount.amount());
         Assertions.assertEquals(Currency.GBP, actualAmount.currency());
+    }
+
+
+    @Test
+    void calculate_tier_three_price_on_big_dimension() {
+        Money actualAmount = postageCalculator.calculate(100, 500, 10, 10, Currency.GBP);
+
+        Assertions.assertEquals(BigDecimal.valueOf(30_000), actualAmount.amount());
+        Assertions.assertEquals(Currency.GBP, actualAmount.currency());
+
     }
 }

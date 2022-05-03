@@ -1,5 +1,7 @@
 import java.math.BigDecimal;
 
+import static java.math.RoundingMode.UNNECESSARY;
+
 public class PostageCalculator {
 
     public static final BigDecimal TIMES_4 = BigDecimal.valueOf(4);
@@ -7,8 +9,11 @@ public class PostageCalculator {
     public static final int TIER_ONE_PRICE = 120;
 
     public Money calculate(int weight, int height, int width, int depth, Currency currency) {
-        ParcelDimension parcelDimension = new ParcelDimension(weight, height, width, depth);
-        Tier tier = parcelDimension.getTier();
+        var parcelDimension = new ParcelDimension(weight, height, width, depth);
+
+        var pricingTierCalculator = new PricingTierCalculator(parcelDimension);
+        Tier tier = pricingTierCalculator.checkParcelPricingTier();
+
         BigDecimal amount = getAmountBy(tier, parcelDimension);
 
         return new Money(amount, Currency.GBP);
@@ -19,11 +24,21 @@ public class PostageCalculator {
             return BigDecimal.valueOf(parcelDimension.weight()).multiply(TIMES_4);
         }
 
-        if(Tier.THREE == tier){
-            return BigDecimal.valueOf(parcelDimension.weight()).multiply(TIMES_6);
+        if (Tier.THREE == tier) {
+            return weightTimesSix(parcelDimension).max(sumOfAllDimension(parcelDimension));
         }
 
         return BigDecimal.valueOf(TIER_ONE_PRICE);
+    }
+
+    private BigDecimal sumOfAllDimension(ParcelDimension parcelDimension) {
+        return BigDecimal.valueOf(parcelDimension.multiplyAll())
+                .divide(BigDecimal.valueOf(1000), UNNECESSARY)
+                .multiply(TIMES_6);
+    }
+
+    private BigDecimal weightTimesSix(ParcelDimension parcelDimension) {
+        return BigDecimal.valueOf(parcelDimension.weight()).multiply(TIMES_6);
     }
 
 }
