@@ -8,7 +8,10 @@ import java.math.BigDecimal;
 class PostageCalculatorShould {
 
     @ParameterizedTest
-    @CsvSource({"50, 220, 150, 10, 120"})
+    @CsvSource({
+        "50, 220, 150, 10, 120",
+        "60, 180, 125, 22, 120",
+    })
     void calculate_for_a_fixed_cost_of_120(int weight, int height, int width, int depth, int expected) {
 
         PostageCalculator postageCalculator = new PostageCalculator();
