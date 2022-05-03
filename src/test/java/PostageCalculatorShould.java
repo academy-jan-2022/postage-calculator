@@ -12,7 +12,7 @@ class PostageCalculatorShould {
 
         Money actualAmount = postageCalculator.calculate(50, 220, 150, 10, Currency.GBP);
 
-        Assertions.assertEquals(actualAmount.amount(), BigDecimal.valueOf(120));
-        Assertions.assertEquals(actualAmount.currency(), Currency.GBP);
+        Assertions.assertEquals(BigDecimal.valueOf(120), actualAmount.amount());
+        Assertions.assertEquals(Currency.GBP, actualAmount.currency());
     }
 }
