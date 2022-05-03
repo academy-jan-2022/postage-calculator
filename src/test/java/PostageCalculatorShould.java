@@ -27,6 +27,7 @@ class PostageCalculatorShould {
             "150, 180, 125, 22, 600",
             "40,300, 100,50, 160",
             "40, 200, 170 ,50, 160",
+            "40, 324, 100 ,50, 160",
     })
     void calculate_variable_cost_dependant_on_weight(int weight, int height, int width, int depth, int expected) {
         PostageCalculator postageCalculator = new PostageCalculator();
