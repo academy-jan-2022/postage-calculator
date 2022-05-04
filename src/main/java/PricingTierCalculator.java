@@ -5,10 +5,10 @@ class PricingTierCalculator {
 
     public PricingTierCalculator(ParcelDimension parcelDimension) {
         pricingTiers = Stream.of(
-                new WeightTier(parcelDimension.weight()),
-                new HeightTier(parcelDimension.height()),
-                new WidthTier(parcelDimension.width()),
-                new DepthTier(parcelDimension.depth()));
+                new WeightTierCalculator(parcelDimension.weight()),
+                new HeightTierCalculator(parcelDimension.height()),
+                new WidthTierCalculator(parcelDimension.width()),
+                new DepthTierCalculator(parcelDimension.depth()));
     }
 
     public Tier checkParcelPricingTier() {
@@ -19,7 +19,7 @@ class PricingTierCalculator {
         Tier getTier();
     }
 
-    private record WeightTier(int weight) implements PriceTier {
+    private record WeightTierCalculator(int weight) implements PriceTier {
         @Override
         public Tier getTier() {
             if (weight > 500) return Tier.THREE;
@@ -28,7 +28,7 @@ class PricingTierCalculator {
         }
     }
 
-    private record HeightTier(int height) implements PriceTier {
+    private record HeightTierCalculator(int height) implements PriceTier {
         @Override
         public Tier getTier() {
             if (height > 324) return Tier.THREE;
@@ -37,7 +37,7 @@ class PricingTierCalculator {
         }
     }
 
-    private record WidthTier(int width) implements PriceTier {
+    private record WidthTierCalculator(int width) implements PriceTier {
         @Override
         public Tier getTier() {
             if (width > 229) return Tier.THREE;
@@ -46,7 +46,7 @@ class PricingTierCalculator {
         }
     }
 
-    private record DepthTier(int depth) implements PriceTier {
+    private record DepthTierCalculator(int depth) implements PriceTier {
         @Override
         public Tier getTier() {
             if (depth > 100) return Tier.THREE;

@@ -1,4 +1,3 @@
-import javax.print.DocFlavor;
 import java.math.BigDecimal;
 
 import static java.math.RoundingMode.UNNECESSARY;
@@ -15,13 +14,12 @@ public class PostageCalculator {
         var pricingTierCalculator = new PricingTierCalculator(parcelDimension);
         Tier tier = pricingTierCalculator.checkParcelPricingTier();
 
-        BigDecimal amount = getAmountBy(tier, parcelDimension);
+        BigDecimal amount = calculateAmountBy(tier, parcelDimension);
 
         return new Money(CurrencyConverter.convertTo(currency, amount), currency);
     }
 
-
-    private BigDecimal getAmountBy(Tier tier, ParcelDimension parcelDimension) {
+    private BigDecimal calculateAmountBy(Tier tier, ParcelDimension parcelDimension) {
         return switch (tier) {
             case ONE -> BigDecimal.valueOf(TIER_ONE_PRICE);
             case TWO -> BigDecimal.valueOf(parcelDimension.weight()).multiply(TIMES_4);
