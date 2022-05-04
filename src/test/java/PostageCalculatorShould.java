@@ -60,13 +60,29 @@ class PostageCalculatorShould {
         Assertions.assertEquals(Currency.GBP, actualAmount.currency());
     }
 
-
     @Test
     void calculate_tier_three_price_on_big_dimension() {
         Money actualAmount = postageCalculator.calculate(100, 500, 10, 10, Currency.GBP);
 
         Assertions.assertEquals(BigDecimal.valueOf(30_000), actualAmount.amount());
         Assertions.assertEquals(Currency.GBP, actualAmount.currency());
+    }
 
+    @Test
+    void calculate_price_on_EUR() {
+        Money actualAmount = postageCalculator.calculate(250, 220, 150, 10, Currency.EUR);
+
+        BigDecimal expected = new BigDecimal("1190.00").add(BigDecimal.valueOf(20));
+        Assertions.assertEquals(expected, actualAmount.amount());
+        Assertions.assertEquals(Currency.EUR, actualAmount.currency());
+    }
+
+    @Test
+    void calculate_price_on_USD() {
+        Money actualAmount = postageCalculator.calculate(250, 220, 150, 10, Currency.USD);
+
+        BigDecimal expected = new BigDecimal("1250.00").add(BigDecimal.valueOf(20));
+        Assertions.assertEquals(expected, actualAmount.amount());
+        Assertions.assertEquals(Currency.USD, actualAmount.currency());
     }
 }
